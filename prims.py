@@ -1,32 +1,30 @@
-import sys
+graph = [
+    # A  B  C  D  E
+    [ 0, 7, 0, 0, 1],  # A
+    [ 7, 0, 3, 0, 8],  # B
+    [ 0, 3, 0, 6, 2],  # C
+    [ 0, 0, 6, 0, 7],  # D
+    [ 1, 8, 2, 7, 0]   # E
+]
 
-def prims_algorithm(graph, n):
-    selected = [False] * n
-    selected[0] = True  # Start from the first vertex
-    print("Edge : Weight")
+def prims(graph,s):
+    vis = [False] * len(graph)
+    vis[s] = True
+    t = 0
+    while True:
+        min = 1000000
+        x,y = -1,-1
+        for i in range(len(graph)):
+            if vis[i]:
+                for j in range(len(graph)):
+                    if not vis[j] and graph[i][j] != 0 and graph[i][j] < min:
+                        min = graph[i][j]
+                        x,y = i,j
+        if x == -1:
+            break
+        vis[y] = True
+        print(x,"to",y,"=",min)
+        t += min
+    print("Total cost:",t)
 
-    for _ in range(n - 1):
-        min_weight = sys.maxsize
-        x = y = 0
-        for i in range(n):
-            if selected[i]:
-                for j in range(n):
-                    if not selected[j] and graph[i][j]:
-                        if min_weight > graph[i][j]:
-                            min_weight = graph[i][j]
-                            x, y = i, j
-        print(f"{x} - {y} : {graph[x][y]}")
-        selected[y] = True
-
-def main():
-    n = int(input("Enter the number of vertices: "))
-    print("Enter the cost matrix (use 0 if no edge):")
-    graph = []
-    for i in range(n):
-        row = list(map(int, input(f"Row {i}: ").split()))
-        graph.append(row)
-
-    prims_algorithm(graph, n)
-
-if __name__ == "__main__":
-    main()
+prims(graph,0)
