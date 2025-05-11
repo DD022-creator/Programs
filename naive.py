@@ -3,15 +3,11 @@ def naive_search(text, pattern):
     n, m = len(text), len(pattern)
     result = []
 
-    for i in range(n - m + 1):  
-        k = i 
-        j = 0  
-
-        while j < m and text[k] == pattern[j]:  
-            k += 1  
-            j += 1  
-
-        if j == m:
+    for i in range(n - m + 1): 
+        x = 0
+        while x < m and text[x+i] == pattern[x]: 
+            x += 1
+        if x == m:
             result.append(i)
 
     if result:
